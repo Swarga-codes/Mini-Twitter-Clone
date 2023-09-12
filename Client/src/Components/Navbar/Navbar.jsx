@@ -1,11 +1,27 @@
 import React from 'react'
 import { Home, UserCheck, User, LogOut, Bird, Paperclip, Brush, Wrench } from 'lucide-react'
-import { useLocation } from 'react-router-dom'
+import { useLocation, useNavigate } from 'react-router-dom'
 import exceptions from '../../utils/nonSidebarRoutes'
 export default function Navbar() {
     const location=useLocation()
+    const navigator=useNavigate()
     if(exceptions.includes(location.pathname)){
         return null
+    }
+    const logoutUser=async()=>{
+        const response=await fetch(`${import.meta.env.VITE_SERVER_URL}/api/auth/logout`,{
+            method:'POST',
+            headers:{
+                'Content-Type':'application/json'
+            },
+        })
+        const data=await response.json()
+        console.log(data)
+        if(data.message){
+            localStorage.clear()
+            document.cookie = "token" + "=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+            navigator('/login')
+        }
     }
   return (
     <aside className="fixed flex h-[100%] w-64 flex-col overflow-y-auto border-r bg-black px-5 py-8">
@@ -47,7 +63,11 @@ export default function Navbar() {
           </a>
           <a
             className="flex transform items-center rounded-lg px-3 py-2 text-gray-200 transition-colors duration-300 hover:bg-gray-100 hover:text-gray-700"
-            href="#"
+            onClick={()=>{
+                if(window.confirm('Would you like to logout?')){
+                    logoutUser()
+                }
+            }}
           >
             <LogOut className="h-5 w-5" aria-hidden="true" />
             <span className="mx-2 text-lg font-medium">Logout</span>
