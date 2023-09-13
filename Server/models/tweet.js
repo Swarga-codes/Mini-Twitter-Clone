@@ -15,6 +15,8 @@ const tweetSchema=new mongoose.Schema({
         type:ObjectId,
         ref:'USER'
     }
+},{
+    timestamps:true
 })
 
 const TWEET=mongoose.model('TWEET',tweetSchema)
