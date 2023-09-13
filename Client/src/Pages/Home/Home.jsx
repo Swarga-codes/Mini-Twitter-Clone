@@ -28,9 +28,7 @@ function Home() {
     <h1 className='font-bold text-xl mt-4'>Welcome, {JSON.parse(localStorage.getItem('user_data'))?.userName}</h1>
     <CreateTweet/>
     {tweets?.map(tweet=>(
-      <Link to={JSON.parse(localStorage.getItem('user_data'))?._id===tweet?.postedBy?._id?`/profile`:`/user/${tweet?.postedBy?._id}`}>
       <TweetCard tweet={tweet}/>
-      </Link>
     )
     )
     }

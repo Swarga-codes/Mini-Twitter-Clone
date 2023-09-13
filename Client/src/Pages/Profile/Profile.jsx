@@ -32,7 +32,7 @@ function Profile() {
       useEffect(()=>{
         getUserData()
 getAllTweets()
-      },[])
+      },[tweets])
   return (
     <div className='bg-black w-full h-[100%] text-white p-6 ml-[16rem]'>
     <h1 className='font-bold text-3xl'>Profile</h1>
