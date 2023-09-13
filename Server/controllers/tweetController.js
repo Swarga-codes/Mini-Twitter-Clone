@@ -25,4 +25,21 @@ if(!allTweets) return res.status(500).json({error:'Could not fetch tweets'})
 
 return res.status(200).json({allTweets})
 }
-module.exports={createTweet,displayAllTweets}
+
+//----------Delete a Tweet----------//
+const deleteTweet=async(req,res)=>{
+    const tweetId=req.params.tweetId
+    try{
+        const findTweet=await TWEET.findById(tweetId)
+        if(!findTweet) return res.status(404).json({error:'Tweet not found'})
+        if(findTweet.postedBy.toString()!==req.user._id.toString()) return res.status(401).json({error:'User not authorized to delete content'})
+        const deleteTweet=await TWEET.findByIdAndDelete(tweetId)
+        if(!deleteTweet) return res.status(500).json({error:'Could not delete tweet'})
+        return res.status(200).json({message:'Tweet deleted successfully'})
+    }
+    catch(error){
+        return res.status(500).json({error:'Internal server error'})
+    }
+}
+
+module.exports={createTweet,displayAllTweets,deleteTweet}

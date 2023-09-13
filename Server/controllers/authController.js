@@ -46,8 +46,8 @@ const loginUser=async(req,res)=>{
         sameSite: "none",
         secure: true,
     })
-    const {_id,profilePic,followers,following}=isExistingUser
-    return res.status(200).json({userData:{userName,profilePic,_id,followers,following},token})
+    const {_id,profilePic}=isExistingUser
+    return res.status(200).json({userData:{userName,profilePic,_id},token})
 }
 
 //----------Logout User----------//
