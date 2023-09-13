@@ -2,6 +2,20 @@ import React, { useEffect, useState } from 'react'
 import TweetCard from '../../Components/TweetCard/TweetCard'
 function Profile() {
     const [tweets,setTweets]=useState([])
+    const [user,setUser]=useState([])
+    const getUserData=async()=>{
+        const response=await fetch(`${import.meta.env.VITE_SERVER_URL}/api/users/${JSON.parse(localStorage.getItem('user_data'))?._id}`,{
+          method:'GET',
+          headers:{
+            'Content-Type':'application/json',
+            'Authorization':'Bearer '+document.cookie.split('=')[1]
+          }
+        })
+        const data=await response.json()
+        if(!data.error){
+        setUser(data.getUser)
+        }
+      }
     const getAllTweets=async()=>{
         const response=await fetch(`${import.meta.env.VITE_SERVER_URL}/api/tweets/displayAllTweets`,{
           method:'GET',
@@ -16,6 +30,7 @@ function Profile() {
         }
       }
       useEffect(()=>{
+        getUserData()
 getAllTweets()
       },[])
   return (
@@ -24,12 +39,12 @@ getAllTweets()
     <div className='mt-10'>
     <img
     className="inline-block h-36 w-36 rounded-full"
-    src={JSON.parse(localStorage.getItem('user_data'))?.profilePic}
+    src={user?.profilePic}
     alt="profile pic"
   />
-  <h1 className="mt-10 font-bold text-2xl">{JSON.parse(localStorage.getItem('user_data'))?.userName}</h1>
+  <h1 className="mt-10 font-bold text-2xl">{user?.userName}</h1>
   <p className='mt-5 font-semibold text-lg'>Joined on 14th October 2022</p>
-  <p className='mt-5 font-semibold text-lg'><b>27 </b>Following &nbsp; &nbsp; <b>4 </b>Followers</p>
+  <p className='mt-5 font-semibold text-lg'><b>{user?.following?.length} </b>Following &nbsp; &nbsp; <b>{user?.followers?.length} </b>Followers</p>
   </div>
   <div className="MyTweets">
   <h1 className="mt-10 font-bold text-2xl">Tweets Posted</h1>

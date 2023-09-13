@@ -6,6 +6,7 @@ const dotenv=require('dotenv')
 dotenv.config()
 const userAuth=require('./routes/userAuth')
 const tweets=require('./routes/tweets')
+const users=require('./routes/users')
 const cors=require('cors')
 app.use(express.json())
 app.use(cors({
@@ -28,6 +29,7 @@ app.get('/',(req,res)=>{
 
 app.use('/api/auth',userAuth);
 app.use('/api/tweets',tweets);
+app.use('/api/users',users);
 app.listen(PORT,(req,res)=>{
     console.log(`Server is listening to ${PORT}`)
 })
