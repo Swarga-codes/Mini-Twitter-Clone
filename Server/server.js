@@ -5,9 +5,16 @@ const mongoose=require('mongoose')
 const dotenv=require('dotenv')
 dotenv.config()
 const userAuth=require('./routes/userAuth')
+const tweets=require('./routes/tweets')
 const cors=require('cors')
 app.use(express.json())
-app.use(cors())
+app.use(cors({
+    origin:["http://localhost:5173",
+    "http://127.0.0.1:5173"]
+    ,
+    methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
+    credentials: true,
+}))
 mongoose.connect(process.env.MONGO_URL)
 mongoose.connection.on('connected',()=>{
     console.log('Connected to mongodb')
@@ -20,6 +27,7 @@ app.get('/',(req,res)=>{
 })
 
 app.use('/api/auth',userAuth);
+app.use('/api/tweets',tweets);
 app.listen(PORT,(req,res)=>{
     console.log(`Server is listening to ${PORT}`)
 })

@@ -10,16 +10,18 @@ function Login() {
         const response=await fetch(`${import.meta.env.VITE_SERVER_URL}/api/auth/login`,{
             method:'POST',
             headers:{
-                'Content-Type':'application/json'
+                'Content-Type':'application/json',
             },
             body:JSON.stringify({
                 userName,
                 password
-            })
+            }),
+            credentials:'include'
         })
         const data=await response.json()
         if(!data.error){
         localStorage.setItem('user_data',JSON.stringify(data.userData))
+        document.cookie = `token=${data.token}; path=/;`;
         navigator('/')
         }
         else{
