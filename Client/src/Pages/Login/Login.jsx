@@ -16,7 +16,7 @@ function Login() {
                 userName,
                 password
             }),
-            credentials:'include'
+            // credentials:'include'
         })
         const data=await response.json()
         if(!data.error){
