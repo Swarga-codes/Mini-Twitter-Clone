@@ -1,6 +1,6 @@
 import React from 'react'
 import { Home, UserCheck, User, LogOut, Bird, Paperclip, Brush, Wrench } from 'lucide-react'
-import { useLocation, useNavigate } from 'react-router-dom'
+import { useLocation, useNavigate,Link } from 'react-router-dom'
 import exceptions from '../../utils/nonSidebarRoutes'
 export default function Navbar() {
     const location=useLocation()
@@ -39,13 +39,13 @@ export default function Navbar() {
       <div className="mt-6 flex flex-1 flex-col justify-between">
         <nav className="-mx-3 space-y-6 ">
           <div className="space-y-3 mt-10">
-            <a
+            <Link
               className="flex transform items-center rounded-lg px-3 py-2 text-gray-200 transition-colors duration-300 hover:bg-gray-50 hover:text-gray-700"
-              href="#"
+              to='/'
             >
               <Home className="h-5 w-5" aria-hidden="true" />
               <span className="mx-2 text-lg font-medium">Home</span>
-            </a>
+            </Link>
             <a
               className="flex transform items-center rounded-lg px-3 py-2 text-gray-200 transition-colors duration-300 hover:bg-gray-100 hover:text-gray-700"
               href="#"
@@ -54,13 +54,13 @@ export default function Navbar() {
               <UserCheck className="h-5 w-5" aria-hidden="true" />
               <span className="mx-2 text-lg font-medium">My Following</span>
             </a>
-            <a
+            <Link
             className="flex transform items-center rounded-lg px-3 py-2 text-gray-200 transition-colors duration-300 hover:bg-gray-100 hover:text-gray-700"
-            href="#"
+           to='/profile'
           >
             <User className="h-5 w-5" aria-hidden="true" />
             <span className="mx-2 text-lg font-medium">Profile</span>
-          </a>
+          </Link>
           <a
             className="flex transform items-center rounded-lg px-3 py-2 text-gray-200 transition-colors duration-300 hover:bg-gray-100 hover:text-gray-700"
             onClick={()=>{
