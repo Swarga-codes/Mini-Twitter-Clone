@@ -57,7 +57,7 @@ return res.status(200).json({message:'User unfollowed successfully'})
 //following tweets of current user
 const followingTweets=async(req,res)=>{
     try{
-    const findUser=await USER.findById(req.user._id)
+    const findUser=await USER.findById(req.user._id).sort({_id:-1})
     if(!findUser) return res.status(404).json({error:'User not found'})
     const getTweets=await TWEET.find({postedBy:{$in:req.user.following}}).populate('postedBy','userName')
     if(getTweets.length===0) return res.status(500).json({error:'Could not fetch tweets'})
