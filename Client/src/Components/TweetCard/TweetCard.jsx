@@ -1,10 +1,14 @@
-import React from 'react'
+import React, { useState } from 'react'
 import dateFormatter from '../../utils/dateFormatter'
-import { Trash2 } from 'lucide-react'
+import { Trash2,Pencil } from 'lucide-react'
 import toast,{Toaster} from 'react-hot-toast'
 import { Link, useLocation } from 'react-router-dom'
+import Popup from './Popup'
 function TweetCard({tweet}) {
   const location=useLocation()
+  
+  const [open, setOpen] = useState(false)
+  
   const deleteTweet=async()=>{
     const response=await fetch(`${import.meta.env.VITE_SERVER_URL}/api/tweets/delete/${tweet._id}`,{
       method:'DELETE',
@@ -35,12 +39,20 @@ function TweetCard({tweet}) {
     </div>
     </Link>
     {tweet?.postedBy?._id===JSON.parse(localStorage.getItem('user_data'))?._id && location.pathname==='/profile' &&
-    <Trash2 className="m-auto stroke-red-400 cursor-pointer" onClick={()=>{
+    <div className="m-auto flex">
+    <Trash2 className="stroke-red-400 cursor-pointer mx-6" onClick={()=>{
       if(window.confirm('Do you really want to delete this tweet?')){
         deleteTweet()
       }
     }}/>
+    <Pencil className="stroke-blue-500 cursor-pointer" onClick={()=>{
+     setOpen(true)
+      
+    }}
+    />
+    </div>
 }
+
     </div>
     <div className='TweetContent mt-10 p-2'>
     <h1>{tweet?.tweetCaption}</h1>
@@ -49,6 +61,7 @@ function TweetCard({tweet}) {
 }
     </div>
     </div>
+    <Popup open={open} setOpen={setOpen} tweet={tweet}/>
     </>
   )
 }
