@@ -2,8 +2,9 @@ import React from 'react'
 import dateFormatter from '../../utils/dateFormatter'
 import { Trash2 } from 'lucide-react'
 import toast,{Toaster} from 'react-hot-toast'
-import { Link } from 'react-router-dom'
+import { Link, useLocation } from 'react-router-dom'
 function TweetCard({tweet}) {
+  const location=useLocation()
   const deleteTweet=async()=>{
     const response=await fetch(`${import.meta.env.VITE_SERVER_URL}/api/tweets/delete/${tweet._id}`,{
       method:'DELETE',
@@ -33,7 +34,7 @@ function TweetCard({tweet}) {
     <p className='ml-5 font-bold'>{tweet?.postedBy?.userName} &nbsp;&nbsp;· {dateFormatter(tweet?.createdAt)}</p>
     </div>
     </Link>
-    {tweet?.postedBy?._id===JSON.parse(localStorage.getItem('user_data'))?._id &&
+    {tweet?.postedBy?._id===JSON.parse(localStorage.getItem('user_data'))?._id && location.pathname==='/profile' &&
     <Trash2 className="m-auto stroke-red-400 cursor-pointer" onClick={()=>{
       if(window.confirm('Do you really want to delete this tweet?')){
         deleteTweet()
