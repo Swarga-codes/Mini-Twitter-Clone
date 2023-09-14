@@ -1,8 +1,14 @@
 import React, { useEffect, useState } from 'react'
 import TweetCard from '../../Components/TweetCard/TweetCard'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 function MyFollowing() {
     const [tweets,setTweets]=useState([])
+    const navigator=useNavigate()
+    useEffect(()=>{
+        if(!document.cookie.split('=')[1]){
+            navigator('/login')
+          }
+    },[])
     const getFollowingTweets=async()=>{
         const response=await fetch(`${import.meta.env.VITE_SERVER_URL}/api/users/following/tweets`,{
             method:'GET',

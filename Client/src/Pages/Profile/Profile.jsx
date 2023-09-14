@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from 'react'
 import TweetCard from '../../Components/TweetCard/TweetCard'
+import { useNavigate } from 'react-router-dom'
 function Profile() {
     const [tweets,setTweets]=useState([])
     const [user,setUser]=useState([])
+    const navigator=useNavigate()
     const getUserData=async()=>{
         const response=await fetch(`${import.meta.env.VITE_SERVER_URL}/api/users/${JSON.parse(localStorage.getItem('user_data'))?._id}`,{
           method:'GET',
@@ -30,6 +32,9 @@ function Profile() {
         }
       }
       useEffect(()=>{
+        if(!document.cookie.split('=')[1]){
+          navigator('/login')
+        }
         getUserData()
 getAllTweets()
       },[tweets])

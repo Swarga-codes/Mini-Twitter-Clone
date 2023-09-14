@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from "react";
 import TweetCard from "../../Components/TweetCard/TweetCard";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import toast, { Toaster } from "react-hot-toast";
 function UserProfile() {
   const [tweets, setTweets] = useState([]);
   const [user, setUser] = useState();
   const [follow, setFollow] = useState(false);
   const { profileId } = useParams();
+  const navigator=useNavigate()
   const getUserData = async () => {
     const response = await fetch(
       `${import.meta.env.VITE_SERVER_URL}/api/users/${profileId}`,
@@ -87,6 +88,9 @@ function UserProfile() {
     }
   };
   useEffect(() => {
+    if(!document.cookie.split('=')[1]){
+      navigator('/login')
+    }
     getUserData();
     getAllTweets();
   }, [follow]);
