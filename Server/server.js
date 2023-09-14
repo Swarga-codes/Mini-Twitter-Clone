@@ -11,7 +11,7 @@ const cors=require('cors')
 app.use(express.json())
 app.use(cors({
     origin:["http://localhost:5173",
-    "http://127.0.0.1:5173","https://mini-twitter-clone-production.up.railway.app"]
+    "http://127.0.0.1:5173","https://mini-twitter-clone-six.vercel.app"]
     ,
     methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
     credentials: true,
