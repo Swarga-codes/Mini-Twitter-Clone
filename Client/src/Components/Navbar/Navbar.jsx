@@ -46,14 +46,15 @@ export default function Navbar() {
               <Home className="h-5 w-5" aria-hidden="true" />
               <span className="mx-2 text-lg font-medium">Home</span>
             </Link>
-            <a
+            <Link
+            to={'/following/tweets'}
               className="flex transform items-center rounded-lg px-3 py-2 text-gray-200 transition-colors duration-300 hover:bg-gray-100 hover:text-gray-700"
-              href="#"
+              
             >
           
               <UserCheck className="h-5 w-5" aria-hidden="true" />
               <span className="mx-2 text-lg font-medium">My Following</span>
-            </a>
+            </Link>
             <Link
             className="flex transform items-center rounded-lg px-3 py-2 text-gray-200 transition-colors duration-300 hover:bg-gray-100 hover:text-gray-700"
            to='/profile'
@@ -76,7 +77,9 @@ export default function Navbar() {
           
 
           <div className="space-y-3 ">
-           <button className='flex items-center px-12 py-4 bg-blue-400 text-white font-bold text-xl rounded-full'>
+           <button className='flex items-center px-12 py-4 bg-blue-400 text-white font-bold text-xl rounded-full'
+           onClick={()=>navigator('/')}
+           >
            <Bird />
            <span className='ml-2'>Tweet</span></button>
           </div>
