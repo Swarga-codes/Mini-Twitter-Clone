@@ -135,7 +135,7 @@ function UserProfile() {
           {tweets
             ?.filter((tweet) => tweet?.postedBy?.userName === user?.userName)
             ?.map((userTweet) => (
-              <TweetCard tweet={userTweet} />
+              <TweetCard tweet={userTweet} key={userTweet._id}/>
             ))}
         </div>
       </div>

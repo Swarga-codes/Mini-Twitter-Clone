@@ -55,7 +55,7 @@ getAllTweets()
   <h1 className="mt-10 font-bold text-2xl">Tweets Posted</h1>
   {
     tweets?.filter(tweet=>tweet?.postedBy?.userName===JSON.parse(localStorage.getItem('user_data'))?.userName)?.map(userTweet=>(
-        <TweetCard tweet={userTweet}/>
+        <TweetCard tweet={userTweet} key={userTweet._id}/>
     ))
   }
   </div>

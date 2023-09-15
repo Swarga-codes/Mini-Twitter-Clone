@@ -30,7 +30,7 @@ function MyFollowing() {
     <h1 className='font-bold text-3xl'>My Following</h1>
     {tweets.length>0?
         tweets?.map(tweet=>(
-            <TweetCard tweet={tweet}/>
+            <TweetCard tweet={tweet} key={tweet?._id}/>
         ))
         :
         <>

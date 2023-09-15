@@ -32,7 +32,7 @@ function Home() {
     <h1 className='font-bold text-xl mt-4'>Welcome, {JSON.parse(localStorage.getItem('user_data'))?.userName}</h1>
     <CreateTweet/>
     {tweets?.map(tweet=>(
-      <TweetCard tweet={tweet}/>
+      <TweetCard tweet={tweet} key={tweet._id}/>
     )
     )
     }

@@ -64,7 +64,6 @@ function CreateTweet() {
       .catch((err) => console.log(err));
   };
   const sendVideoToCloudinary = () => {
-    console.log(video)
     const data = new FormData();
     data.append("file", video);
     data.append("upload_preset", "mini_twitter");
@@ -76,7 +75,6 @@ function CreateTweet() {
       .then((res) => res.json())
       .then((data) => {
         setUrl(data.url);
-        console.log(data.url);
       })
       .catch((err) => console.log(err));
   };

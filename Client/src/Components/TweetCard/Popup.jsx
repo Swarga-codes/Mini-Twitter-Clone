@@ -6,11 +6,14 @@ export default function Popup({open,setOpen,tweet}) {
   
     const [tweetCaption,setTweetCaption]=useState(tweet.tweetCaption)
     const [photo,setPhoto]=useState(tweet?.photo)
-    const [video,setVideo]=useState(tweet?.video)
+    const [video,setVideo]=useState("")
     const [isChanged,setIsChanged]=useState(false)
     const [loading,setLoading]=useState(false)
+    const [videoDisp,setVideoDisp]=useState(tweet?.video)
     const imageRef=useRef()
+    const videoRef=useRef()
     const [url,setUrl]=useState("")
+    const [videoUrl,setVideoUrl]=useState("")
     const updateTweet=async()=>{
         const response=await fetch(`${import.meta.env.VITE_SERVER_URL}/api/tweets/updateTweet`,{
           method:'PATCH',
@@ -21,8 +24,8 @@ export default function Popup({open,setOpen,tweet}) {
           body:JSON.stringify({
             tweetId:tweet._id,
             tweetCaption,
-            photo:url?url:photo,
-            video
+            photo:url?url:tweet?.photo,
+            video:videoUrl?videoUrl:tweet?.video
           })
     
         })
@@ -36,6 +39,8 @@ export default function Popup({open,setOpen,tweet}) {
           toast.error(data.error)
           setLoading(false)
           setOpen(false)
+          videoDisp(tweet?.video)
+          video("")
         }
       }
       const loadFile = (e) => {
@@ -61,12 +66,32 @@ export default function Popup({open,setOpen,tweet}) {
           })
           .catch((err) => console.log(err));
       };
+      const sendVideoToCloudinary = () => {
+        const data = new FormData();
+        data.append("file", video);
+        data.append("upload_preset", "mini_twitter");
+        data.append("cloud_name", `${import.meta.env.VITE_CLOUD_KEY}`);
+        fetch(`${import.meta.env.VITE_CLOUD_VIDEO_URL}`, {
+          method: "POST",
+          body: data,
+        })
+          .then((res) => res.json())
+          .then((data) => {
+            setVideoUrl(data.url);
+          })
+          .catch((err) => console.log(err));
+      };
   const cancelButtonRef = useRef(null)
 useEffect(()=>{
 if(url){
     updateTweet()
 }
 },[url])
+useEffect(()=>{
+  if(videoUrl){
+      updateTweet()
+  }
+  },[videoUrl])
   return (
     <Transition.Root show={open} as={Fragment}>
       <Dialog as="div" className="relative z-10" initialFocus={cancelButtonRef} onClose={setOpen}>
@@ -126,6 +151,25 @@ if(url){
                 imageRef.current.click()
             }}/>
             }
+            <input id="file-upload" name="file-upload" type="file" className="hidden" accept='video/*' ref={videoRef}
+        onChange={(e)=>{
+          const file = e.target.files[0];
+          if (file) {
+            const videoURL = URL.createObjectURL(file);
+            setVideoDisp(videoURL);
+          setIsChanged(true)
+          }
+      setVideo(e.target.files[0]);
+        }}
+        />
+            {tweet?.video &&
+              <>
+              <p className="text-underlined text-blue-500 mt-2 ml-auto cursor-pointer" onClick={()=>videoRef.current.click()}>Change video</p>
+              <video src={videoDisp} className='mt-5 rounded-lg' id='output' controls width='640' height='320' onClick={()=>{
+                  videoRef.current.click()
+              }}></video>
+              </>
+              }
               </div>  
               <div className="bg-gray-50 px-4 py-3 sm:flex sm:flex-row-reverse sm:px-6">
                   {!loading?
@@ -137,8 +181,11 @@ if(url){
                         if(!isChanged){
                         await updateTweet()
                         }
-                        else{
+                        else if(photo){
                         sendImageToCloudinary()
+                        }
+                        else if(videoDisp){
+                          sendVideoToCloudinary()
                         }
                     }}
                   >
