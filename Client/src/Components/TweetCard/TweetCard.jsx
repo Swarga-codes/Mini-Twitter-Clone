@@ -59,6 +59,9 @@ function TweetCard({tweet}) {
     {tweet?.photo &&
     <img src={tweet.photo} alt="" className='rounded-xl mt-6' height={600} width={600}/>
 }
+{tweet?.video &&
+  <video src={tweet.video} className='rounded-xl mt-6' controls width='640' height='320'></video>
+}
     </div>
     </div>
     <Popup open={open} setOpen={setOpen} tweet={tweet}/>

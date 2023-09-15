@@ -10,7 +10,9 @@ function CreateTweet() {
   const [video, setVideo] = useState("");
   const [url,setUrl]=useState("")
   const [loading,setLoading]=useState(false);
+  const [videoDisp,setVideoDisp]=useState("")
   const imageRef=useRef()
+  const videoRef=useRef()
   const createTweet = async () => {
     const response = await fetch(
       `${import.meta.env.VITE_SERVER_URL}/api/tweets/createTweet`,
@@ -58,6 +60,22 @@ function CreateTweet() {
       .then((res) => res.json())
       .then((data) => {
         setUrl(data.url);
+      })
+      .catch((err) => console.log(err));
+  };
+  const sendVideoToCloudinary = () => {
+    console.log(video)
+    const data = new FormData();
+    data.append("file", video);
+    data.append("upload_preset", "mini_twitter");
+    data.append("cloud_name", `${import.meta.env.VITE_CLOUD_KEY}`);
+    fetch(`${import.meta.env.VITE_CLOUD_VIDEO_URL}`, {
+      method: "POST",
+      body: data,
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        setUrl(data.url);
         console.log(data.url);
       })
       .catch((err) => console.log(err));
@@ -89,30 +107,49 @@ function CreateTweet() {
         :
         <img id='output' height={300} width={300} className="hidden"/>
       }
+     {video && <video src={videoDisp} controls width='640' height='320'>
+                
+     </video>}
         <input id="file-upload" name="file-upload" type="file" className="hidden" accept='image/*' ref={imageRef}
         onChange={(e)=>{
           loadFile(e)
           setPhoto(e.target.files[0])
-          console.log(e.target.files[0])
+        setVideo('')
+
+        }}
+        />
+        <input id="file-upload" name="file-upload" type="file" className="hidden" accept='video/*' ref={videoRef}
+        onChange={(e)=>{
+          const file = e.target.files[0];
+          if (file) {
+            const videoURL = URL.createObjectURL(file);
+            setVideoDisp(videoURL);
+          }
+      setVideo(e.target.files[0]);
+      setPhoto('')
         }}
         />
         <div className="flex mt-4">
           <div className="add_icons flex">
             <Image className="text-blue-500 mr-4 cursor-pointer" onClick={()=>imageRef.current.click()}/>
-            <PlayCircle className="text-blue-500 cursor-pointer" />
+            <PlayCircle className="text-blue-500 cursor-pointer" onClick={()=>videoRef.current.click()}/>
           </div>
           <div className="flex w-fit ml-auto">
           {!loading?
             <button
               className="bg-blue-500 p-3 px-5 font-bold rounded-3xl"
               onClick={() => {
-                setLoading(true)
                 if(photo){
                   sendImageToCloudinary()
-                }else{
+                }
+                else if(video){
+                  sendVideoToCloudinary()
+                }
+                else{
                   createTweet()
                 }
-              
+                toast('Uploading, please wait...',{duration:2000})
+                setLoading(true)
               }}
             >
               Tweet
