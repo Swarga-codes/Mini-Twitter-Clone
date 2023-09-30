@@ -27,10 +27,13 @@ function Home() {
     }
     getAllTweets()
   },[tweets])
+  useEffect(()=>{
+    window.scrollTo(0,0)
+  },[])
   return (
     <>
    
-    <div className='bg-black w-full min-h-screen text-white p-6 ml-[16rem]'>
+    <div className='Home bg-black w-full min-h-screen text-white p-6 ml-[16rem]'>
     <h1 className='font-bold text-3xl'>Home</h1>
     <h1 className='font-bold text-xl mt-4'>Welcome, {JSON.parse(localStorage.getItem('user_data'))?.userName}</h1>
     <CreateTweet/>

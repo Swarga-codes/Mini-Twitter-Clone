@@ -10,6 +10,7 @@ function MyFollowing() {
         if(!document.cookie.split('=')[1]){
             navigator('/login')
           }
+          window.scrollTo(0,0)
     },[])
     const getFollowingTweets=async()=>{
         const response=await fetch(`${import.meta.env.VITE_SERVER_URL}/api/users/following/tweets`,{
@@ -29,7 +30,7 @@ function MyFollowing() {
         getFollowingTweets()
     },[])
   return (
-    <div className='bg-black w-full min-h-screen text-white p-6 ml-[16rem]'>
+    <div className='Home bg-black w-full min-h-screen text-white p-6 ml-[16rem]'>
     <h1 className='font-bold text-3xl'>My Following</h1>
     {loading && <PostsSkeleton/>}
     {tweets.length>0?

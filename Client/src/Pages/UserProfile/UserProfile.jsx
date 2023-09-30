@@ -97,6 +97,9 @@ function UserProfile() {
     getUserData();
     getAllTweets();
   }, [follow]);
+  useEffect(()=>{
+    window.scrollTo(0,0)
+  },[])
   return (
     <>
       <div>

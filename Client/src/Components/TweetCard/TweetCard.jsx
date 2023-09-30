@@ -30,7 +30,7 @@ function TweetCard({tweet}) {
     <div>
     <Toaster position="top-center" reverseOrder={false} />
   </div>
-    <div className='TweetCard text-white mt-10 p-6'>
+    <div className='TweetCard text-white mt-10 p-6 w-fit'>
     <div className="TweetHead flex">
     <Link to={JSON.parse(localStorage.getItem('user_data'))?._id===tweet?.postedBy?._id?`/profile`:`/user/${tweet?.postedBy?._id}`}>
     <div className="flex">

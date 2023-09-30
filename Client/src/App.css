@@ -2,3 +2,13 @@
   margin: 0;
   padding: 0;
 }
+
+@media(max-width:991px){
+  aside{
+      display: none !important;
+  }
+  .Home{
+    margin: 0 !important;
+    width: max-content !important;
+  }
+}
