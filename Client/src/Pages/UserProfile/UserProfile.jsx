@@ -105,7 +105,7 @@ function UserProfile() {
       <div>
         <Toaster position="top-center" reverseOrder={false} />
       </div>
-      <div className="bg-black w-full min-h-screen text-white p-6 ml-[16rem]">
+      <div className="Profile bg-black w-full min-h-screen text-white p-6 ml-[16rem]">
         <div className="mt-10">
           <img
             className="inline-block h-36 w-36 rounded-full"

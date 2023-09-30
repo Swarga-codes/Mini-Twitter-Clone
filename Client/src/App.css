@@ -9,6 +9,19 @@
   }
   .Home{
     margin: 0 !important;
-    width: max-content !important;
+    overflow-x: hidden !important;
+    width: fit-content !important;
+  }
+  .Profile{
+    margin: 0 !important;
+  }
+  .CreateTweet{
+    padding: 0 !important;
+  }
+  .TweetCard{
+    padding: 0 !important;
+  }
+  textarea{
+    width: 100% !important;
   }
 }
