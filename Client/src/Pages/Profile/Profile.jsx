@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from 'react'
 import TweetCard from '../../Components/TweetCard/TweetCard'
 import { useNavigate } from 'react-router-dom'
+import PostsSkeleton from '../../Components/PostsSkeleton/PostsSkeleton'
 function Profile() {
     const [tweets,setTweets]=useState([])
     const [user,setUser]=useState([])
+    const [loading,setLoading]=useState(true)
     const navigator=useNavigate()
     const getUserData=async()=>{
         const response=await fetch(`${import.meta.env.VITE_SERVER_URL}/api/users/${JSON.parse(localStorage.getItem('user_data'))?._id}`,{
@@ -29,6 +31,7 @@ function Profile() {
         const data=await response.json()
         if(!data.error){
         setTweets(data.allTweets)
+        setLoading(false)
         }
       }
       useEffect(()=>{
@@ -53,6 +56,7 @@ getAllTweets()
   </div>
   <div className="MyTweets">
   <h1 className="mt-10 font-bold text-2xl">Tweets Posted</h1>
+  {loading && <PostsSkeleton/>}
   {
     tweets?.filter(tweet=>tweet?.postedBy?.userName===JSON.parse(localStorage.getItem('user_data'))?.userName)?.map(userTweet=>(
         <TweetCard tweet={userTweet} key={userTweet._id}/>

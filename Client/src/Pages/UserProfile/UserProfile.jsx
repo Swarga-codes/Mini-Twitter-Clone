@@ -2,10 +2,12 @@ import React, { useEffect, useState } from "react";
 import TweetCard from "../../Components/TweetCard/TweetCard";
 import { useNavigate, useParams } from "react-router-dom";
 import toast, { Toaster } from "react-hot-toast";
+import PostsSkeleton from "../../Components/PostsSkeleton/PostsSkeleton";
 function UserProfile() {
   const [tweets, setTweets] = useState([]);
   const [user, setUser] = useState();
   const [follow, setFollow] = useState(false);
+  const [loading,setLoading]=useState(true)
   const { profileId } = useParams();
   const navigator=useNavigate()
   const getUserData = async () => {
@@ -41,6 +43,7 @@ function UserProfile() {
     const data = await response.json();
     if (!data.error) {
       setTweets(data.allTweets);
+      setLoading(false)
     }
   };
   const followUser = async () => {
@@ -132,6 +135,7 @@ function UserProfile() {
         </div>
         <div className="MyTweets">
           <h1 className="mt-10 font-bold text-2xl">Tweets Posted</h1>
+          {loading && <PostsSkeleton/>}
           {tweets
             ?.filter((tweet) => tweet?.postedBy?.userName === user?.userName)
             ?.map((userTweet) => (

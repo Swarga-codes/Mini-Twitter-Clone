@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from 'react'
 import TweetCard from '../../Components/TweetCard/TweetCard'
 import { Link, useNavigate } from 'react-router-dom'
+import PostsSkeleton from '../../Components/PostsSkeleton/PostsSkeleton'
 function MyFollowing() {
     const [tweets,setTweets]=useState([])
+    const [loading,setLoading]=useState(true)
     const navigator=useNavigate()
     useEffect(()=>{
         if(!document.cookie.split('=')[1]){
@@ -20,6 +22,7 @@ function MyFollowing() {
           const data=await response.json()
           if(!data.error){
           setTweets(data.getTweets)
+          setLoading(false)
           }
     }
     useEffect(()=>{
@@ -28,6 +31,7 @@ function MyFollowing() {
   return (
     <div className='bg-black w-full min-h-screen text-white p-6 ml-[16rem]'>
     <h1 className='font-bold text-3xl'>My Following</h1>
+    {loading && <PostsSkeleton/>}
     {tweets.length>0?
         tweets?.map(tweet=>(
             <TweetCard tweet={tweet} key={tweet?._id}/>
