@@ -1,5 +1,5 @@
 import React from 'react'
-import { Home, UserCheck, User, LogOut, Bird, Paperclip, Brush, Wrench } from 'lucide-react'
+import { Home, UserCheck, User, LogOut, Bird} from 'lucide-react'
 import { useLocation, useNavigate,Link } from 'react-router-dom'
 import exceptions from '../../utils/nonSidebarRoutes'
 export default function Navbar() {

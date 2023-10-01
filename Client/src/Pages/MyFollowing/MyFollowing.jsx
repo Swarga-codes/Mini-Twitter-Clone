@@ -30,7 +30,7 @@ function MyFollowing() {
         getFollowingTweets()
     },[])
   return (
-    <div className='Home bg-black w-full min-h-screen text-white p-6 ml-[16rem]'>
+    <div className='MyFollowing bg-black w-full min-h-screen text-white p-6 ml-[16rem]'>
     <h1 className='font-bold text-3xl'>My Following</h1>
     {loading && <PostsSkeleton/>}
     {tweets.length>0?

@@ -2,7 +2,9 @@
   margin: 0;
   padding: 0;
 }
-
+.TweetCard:last-child{
+  margin-bottom: 0;
+}
 @media(max-width:991px){
   aside{
       display: none !important;
@@ -10,7 +12,7 @@
   .Home{
     margin: 0 !important;
     overflow-x: hidden !important;
-    width: fit-content !important;
+    width: 100% !important;
   }
   .Profile{
     margin: 0 !important;
@@ -21,7 +23,19 @@
   .TweetCard{
     padding: 0 !important;
   }
+  .TweetCard:last-child{
+    margin-bottom: 5rem;
+  }
   textarea{
     width: 100% !important;
+  }
+  .MyFollowing{
+    width: 100% !important;
+    margin: 0 !important;
+  }
+  .BottomNav{
+    display: flex !important;
+    justify-content: space-between;
+    align-items: center;
   }
 }
