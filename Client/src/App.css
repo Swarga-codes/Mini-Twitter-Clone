@@ -38,4 +38,16 @@
     justify-content: space-between;
     align-items: center;
   }
+  .Skeleton{
+    width: 100% !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    margin-top: 5rem !important;
+  }
+  .SkeletonUser{
+    width: 16rem !important;
+  }
+  .SkeletonImage{
+    width: 100% !important;
+  }
 }

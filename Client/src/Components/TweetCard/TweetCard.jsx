@@ -30,7 +30,7 @@ function TweetCard({tweet}) {
     <div>
     <Toaster position="top-center" reverseOrder={false} />
   </div>
-    <div className='TweetCard text-white mt-10 p-6 w-fit'>
+    <div className='TweetCard text-white mt-10 p-6 w-[100%]'>
     <div className="TweetHead flex">
     <Link to={JSON.parse(localStorage.getItem('user_data'))?._id===tweet?.postedBy?._id?`/profile`:`/user/${tweet?.postedBy?._id}`}>
     <div className="flex">
@@ -39,7 +39,7 @@ function TweetCard({tweet}) {
     </div>
     </Link>
     {tweet?.postedBy?._id===JSON.parse(localStorage.getItem('user_data'))?._id && location.pathname==='/profile' &&
-    <div className="m-auto flex">
+    <div className="ml-auto flex">
     <Trash2 className="stroke-red-400 cursor-pointer mx-6" onClick={()=>{
       if(window.confirm('Do you really want to delete this tweet?')){
         deleteTweet()
