@@ -1,8 +1,13 @@
 import React from 'react'
-import { Home, UserCheck, User, LogOut, Bird } from 'lucide-react'
+import { Home, UserCheck, User, LogOut } from 'lucide-react'
 import { Link } from 'react-router-dom'
-
+import { useLocation } from 'react-router-dom'
+import exceptions from '../../utils/nonSidebarRoutes'
 function BottomNav() {
+    const location=useLocation()
+    if(exceptions.includes(location.pathname)){
+        return null
+    }
     const logoutUser=async()=>{
         const response=await fetch(`${import.meta.env.VITE_SERVER_URL}/api/auth/logout`,{
             method:'POST',
